@@ -76,31 +76,35 @@ export default {
       cart: {
         carts: [],
       },
-      isLoading: false,
     };
   },
   methods: {
     getCart() {
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.state.isLoading = true;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       this.$http.get(url).then((response) => {
         if (response.data.data.carts) {
           vm.cart = response.data.data;
         }
-        vm.isLoading = false;
+        vm.$store.state.isLoading = false;
         console.log('取得購物車', response.data.data);
       });
     },
     removeCart(id) {
       const vm = this;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      vm.isLoading = true;
+      vm.$store.state.isLoading = true;
       this.$http.delete(url).then((response) => {
-        vm.isLoading = false;
+        vm.$store.state.isLoading = false;
         vm.getCart();
         console.log('刪除購物車項目', response);
       });
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
     },
   },
   created() {
