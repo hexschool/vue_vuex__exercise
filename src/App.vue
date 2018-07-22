@@ -81,22 +81,22 @@ export default {
   methods: {
     getCart() {
       const vm = this;
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       this.$http.get(url).then((response) => {
         if (response.data.data.carts) {
           vm.cart = response.data.data;
         }
-        vm.$store.state.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         console.log('取得購物車', response.data.data);
       });
     },
     removeCart(id) {
       const vm = this;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.delete(url).then((response) => {
-        vm.$store.state.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
         vm.getCart();
         console.log('刪除購物車項目', response);
       });
