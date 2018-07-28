@@ -99,17 +99,7 @@ export default {
       this.$store.dispatch('getProducts');
     },
     addtoCart(id, qty = 1) {
-      const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.$store.dispatch('updateLoading', true);
-      const item = {
-        product_id: id,
-        qty,
-      };
-      this.$http.post(url, { data: item }).then((response) => {
-        vm.$store.dispatch('updateLoading', false);
-        console.log('加入購物車:', response);
-      });
+      this.$store.dispatch('addtoCart', { id, qty });
     },
     getUnique() {
       const vm = this;

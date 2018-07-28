@@ -73,38 +73,22 @@ export default {
   name: 'App',
   data() {
     return {
-      cart: {
-        carts: [],
-      },
     };
   },
   methods: {
     getCart() {
-      const vm = this;
-      vm.$store.dispatch('updateLoading', true);
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      this.$http.get(url).then((response) => {
-        if (response.data.data.carts) {
-          vm.cart = response.data.data;
-        }
-        vm.$store.dispatch('updateLoading', false);
-        console.log('取得購物車', response.data.data);
-      });
+      this.$store.dispatch('getCart');
     },
     removeCart(id) {
-      const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      vm.$store.dispatch('updateLoading', true);
-      this.$http.delete(url).then((response) => {
-        vm.$store.dispatch('updateLoading', false);
-        vm.getCart();
-        console.log('刪除購物車項目', response);
-      });
+      this.$store.dispatch('removeCart', id);
     },
   },
   computed: {
     isLoading() {
       return this.$store.state.isLoading;
+    },
+    cart() {
+      return this.$store.state.cart;
     },
   },
   created() {
