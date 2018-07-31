@@ -89,14 +89,15 @@ export default {
       }
       return this.products;
     },
-    ...mapGetters(['categories', 'products']),
+    ...mapGetters('productsModules', ['categories', 'products']),
   },
   methods: {
     addtoCart(id, qty = 1) {
-      this.$store.dispatch('addtoCart', { id, qty });
+      console.log(this.$store.state.productsModules.products);
+      this.$store.dispatch('cartsModules/addtoCart', { id, qty });
     },
 
-    ...mapActions(['getProducts']),
+    ...mapActions('productsModules', ['getProducts']),
   },
   created() {
     this.getProducts();

@@ -79,12 +79,13 @@ export default {
   },
   methods: {
     removeCart(id) {
-      this.$store.dispatch('removeCart', id);
+      this.$store.dispatch('cartsModules/removeCart', id);
     },
-    ...mapActions(['getCart']),
+    ...mapActions('cartsModules', ['getCart']),
   },
   computed: {
-    ...mapGetters(['cart', 'isLoading']),
+    ...mapGetters('cartsModules', ['cart']),
+    ...mapGetters(['isLoading']),
   },
   created() {
     this.getCart();
